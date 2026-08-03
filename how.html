@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How does Team JEDI do what they do? — JEDI</title>
+<meta name="description" content="Inside the JEDI platform: the architecture, the dashboard, the map, the C2 integration, and the full list of capabilities it supports." />
+<link rel="icon" href="assets/media/logos/favicon_nexus.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <button class="nav-brand" aria-label="Open menu" aria-expanded="false">
+      <svg class="nav-logo-svg" viewBox="0 0 321.4 241.18" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Team JEDI logo">
+        <path class="logo-rest" d="M50.14,0v7.44h-13.27v38.84h-8.58V7.44h-13.27V0h35.11Z"/>
+        <path class="logo-rest" d="M126.28,0v7.38h-23.17v11.65h22.07v7.67h-22.17v12.14h23.72v7.44h-32.14V0h31.68Z"/>
+        <path class="logo-rest" d="M185.51,46.28h-8.8L196.35,0h9.22l20.07,46.28h-9.22l-5.28-12.62h-15.37l2.95-7.44h9.32l-7.28-17.38-15.24,37.44Z"/>
+        <path class="logo-rest" d="M272.85,46.28V0h8.9l15.7,35.11L312.82,0h8.58v46.28h-7.93V14.05l-12.56,32.23h-7.31l-12.82-32.23v32.23h-7.93Z"/>
+        <path class="logo-rest" d="M28.31,71.87v119.88c0,19.97-8.76,32.4-28.2,32.4h-.11v17.02c30.68-.11,46.53-20.08,46.53-48.2v-121.1h-18.22Z"/>
+        <path class="logo-rest" d="M174.8,71.17h48.94c35.64.18,62.24,21.28,62.24,60.46s-26.6,60.11-62.24,60.11h-48.94v-120.58ZM193.24,87.31v88.3h29.79c25.71,0,43.98-15.6,43.98-43.98s-18.27-44.15-43.98-44.33h-29.79Z"/>
+        <rect class="logo-rest" x="303.17" y="71.88" width="18.22" height="119.16"/>
+        <g class="logo-e-bars">
+          <rect x="63.73" y="71.17" width="93.87" height="15.55"/>
+          <rect x="63.73" y="123.68" width="93.87" height="15.55"/>
+          <rect x="63.73" y="176.19" width="93.87" height="15.55"/>
+        </g>
+      </svg>
+    </button>
+
+    <div class="nav-favicon-travel" aria-hidden="true">
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <g class="travel-bars">
+          <rect x="0" y="83" width="266" height="44" fill="#286E97"/>
+          <rect x="0" y="233" width="266" height="44" fill="#286E97"/>
+          <rect x="0" y="383" width="266" height="44" fill="#286E97"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="nav-center-brand" aria-hidden="true">
+      <svg class="nav-center-wordmark" viewBox="0 0 321.4 241.18" xmlns="http://www.w3.org/2000/svg">
+        <path class="center-logo-rest" d="M50.14,0v7.44h-13.27v38.84h-8.58V7.44h-13.27V0h35.11Z"/>
+        <path class="center-logo-rest" d="M126.28,0v7.38h-23.17v11.65h22.07v7.67h-22.17v12.14h23.72v7.44h-32.14V0h31.68Z"/>
+        <path class="center-logo-rest" d="M185.51,46.28h-8.8L196.35,0h9.22l20.07,46.28h-9.22l-5.28-12.62h-15.37l2.95-7.44h9.32l-7.28-17.38-15.24,37.44Z"/>
+        <path class="center-logo-rest" d="M272.85,46.28V0h8.9l15.7,35.11L312.82,0h8.58v46.28h-7.93V14.05l-12.56,32.23h-7.31l-12.82-32.23v32.23h-7.93Z"/>
+        <path class="center-logo-rest" d="M28.31,71.87v119.88c0,19.97-8.76,32.4-28.2,32.4h-.11v17.02c30.68-.11,46.53-20.08,46.53-48.2v-121.1h-18.22Z"/>
+        <path class="center-logo-rest" d="M174.8,71.17h48.94c35.64.18,62.24,21.28,62.24,60.46s-26.6,60.11-62.24,60.11h-48.94v-120.58ZM193.24,87.31v88.3h29.79c25.71,0,43.98-15.6,43.98-43.98s-18.27-44.15-43.98-44.33h-29.79Z"/>
+        <rect class="center-logo-rest" x="303.17" y="71.88" width="18.22" height="119.16"/>
+      </svg>
+    </div>
+
+    <div class="nav-links mono">
+      <a href="index.html#stakes">Home</a>
+      <a href="who.html">Meet JEDI</a>
+      <a href="what.html" class="nav-current">Capability</a>
+      <a href="who.html">Track Record</a>
+      <a href="about.html">About</a>
+    </div>
+    <a href="contact.html" class="nav-cta">Deploy now</a>
+
+    <div class="nav-mobile-menu">
+      <a href="index.html#stakes">Home</a>
+      <a href="who.html">Meet JEDI</a>
+      <a href="what.html" class="nav-current">Capability</a>
+      <a href="who.html">Track Record</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="nav-cta">Deploy now</a>
+    </div>
+  </nav>
+
+  <header class="hero page-hero">
+    <div class="wrap hero-content">
+      <h1 class="display">Meet Team JEDI and its capabilities</h1>
+      <p class="lead">Real-time visibility of mission partners' sustainment resources and combat effectiveness, built for coalition environments where data sharing is constrained. Here's the architecture, the screens, and the full list of what it's built to support.</p>
+    </div>
+  </header>
+
+  <section class="section" id="process">
+    <div class="wrap">
+      <span class="section-tag mono">The mechanism</span>
+      <h2 class="section-title display">Four layers. No manual handoffs.</h2>
+
+      <div class="process-grid">
+        <div class="process-step">
+          <span class="step-n mono">01</span>
+          <h4>Ingest</h4>
+          <p>The JEDI-X Data Platform is the interoperability engine underneath everything else — business rules, data mappings, and translation services, plus the APIs other systems plug into. Designed for machine and human consumption alike.</p>
+        </div>
+        <div class="process-step">
+          <span class="step-n mono">02</span>
+          <h4>Visualize</h4>
+          <p>The Dashboard and Map turn that data into intuitive interfaces, refined over years of feedback captured directly from operations and exercises — built for staffs to analyze, spot issues, and generate courses of action.</p>
+        </div>
+        <div class="process-step">
+          <span class="step-n mono">03</span>
+          <h4>Customize</h4>
+          <p>Specialists — fuels, transportation, ammunition planners — and briefers building a Commander's Update tailor their own view without touching the underlying data or anyone else's screen.</p>
+        </div>
+        <div class="process-step">
+          <span class="step-n mono">04</span>
+          <h4>Automate</h4>
+          <p>Historical data becomes trend identification and predictive analytics, so staffs can act on where a unit is headed — not just where it stands right now.</p>
+        </div>
+      </div>
+
+      <div class="explore-row explore-row-full">
+        <div class="explore-text">
+          <span class="section-tag mono">Jedi enables you to </span>
+          <h3 class="display">Fight Tonight</h3>
+          <p style="font-family:'pluto-regular',sans-serif;color:var(--text-dim);font-size:15.5px;line-height:1.7;max-width:760px;margin:0 0 22px;">JEDI works with whatever a partner already has — agnostic of existing systems, minimal hardware footprint, running across classified, unclassified, and commercial environments alike, so no coalition partner has to wait on a fielding schedule to get in the picture.</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="section showcase" id="platform">
+    <div class="wrap">
+      <span class="section-tag mono">Platform</span>
+      <h2 class="section-title display">Meet JEDI</h2>
+
+      <div class="showcase-row">
+        <div class="showcase-text">
+          <h3 class="display">A data platform for the 21st century</h3>
+          <p>JEDI integrates and automates the flow of data into NATO architecture — so the picture updates itself, everywhere it needs to. Categories like combat fleet, fuel, ammunition, food, water, and transport are tracked side by side, each flagged by a color-coded concern level, so a glance tells you exactly where the gaps are.</p>
+        </div>
+        <div class="showcase-media">
+          <img src="assets/media/forces.png" alt="Screenshot of the JEDI MNLOGCOP forces dashboard showing unit-level logistics status">
+        </div>
+      </div>
+
+      <div class="showcase-row reverse">
+        <div class="showcase-text">
+          <h3 class="display">Multinational sustainability. Ultimate interoperability.</h3>
+          <p>JEDI aggregates multiple feeds of data from multiple nations to support your combat effectiveness. The map view plots live asset tracking and movement missions across the theater, filterable by nation, with routes and positions overlaid — so planners can see where equipment and forces actually are without cross-referencing five different systems.</p>
+        </div>
+        <div class="showcase-media">
+          <img src="assets/media/map.png" alt="Screenshot of the JEDI common operational picture map view with multinational logistics overlays">
+        </div>
+      </div>
+
+      <div class="showcase-row reverse">
+        <div class="showcase-text">
+          <h3 class="display">Every number, one click from its source</h3>
+          <p>Filter by profile, force, and nation, and the dashboard updates a graphical summary of unit status alongside the key numbers behind it — all under a color-coded legend that flags concern level at a glance. Drill straight down from there into individual line items by RIC (Reportable Item Code) or NIC (National Identification Code), across hundreds of items per nation, live or historical.</p>
+        </div>
+        <div class="showcase-media">
+          <img src="assets/media/brief/mnlogcop-dashboard-detail.png" alt="Detailed screenshot of the JEDI MNLOGCOP dashboard with profile, force, and nation filters, RIC/NIC drill-down, and a color-coded concern legend">
+        </div>
+      </div>
+
+      <div class="showcase-row">
+        <div class="showcase-text">
+          <h3 class="display">Speaks C2, not just logistics</h3>
+          <p>During Exercise Shared Horizon 2025, JEDI MNLOGCOP displayed enemy positions and sectors pulled straight from a mission partner's targeting system — proof that, through the JEDI API and a MIP Gateway, systems that were never designed to talk to each other can now exchange data bi-directionally. That same C2 integration extends to the Maven Smart System (MSS), so logistics doesn't sit in a silo apart from the operational picture.</p>
+        </div>
+        <div class="showcase-media">
+          <img src="assets/media/brief/mnlogcop-map-view.jpg" alt="Screenshot of JEDI MNLOGCOP displaying multinational force positions and enemy sectors from a mission partner's targeting system during Exercise Shared Horizon 2025">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section callout-section">
+    <div class="wrap">
+      <div class="callout-box">
+        <span class="section-tag mono">Under The Hood</span>
+        <h2 class="callout-title display">It runs in the background. On purpose.</h2>
+        <p>JEDI MNLOGCOP interacts with LOGFAS in the background, so users get the benefit of LOGFAS-structured data without ever needing to train on or knowingly interact with LOGFAS itself. Data can enter the pipeline three ways — pulled automatically from a nation's own authoritative systems, entered directly by soldiers, or exchanged machine-to-machine through JEDI-X's own APIs — and all three come out the other side in the same LOGFAS-compatible format, whether the receiving side runs LOGFAS natively or not. Sync jobs can also be automated and scheduled to periodically retrieve and archive data, giving every user access to historical snapshots for after-action review and trend analysis — not just a live view that disappears the moment the operation ends.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="capabilities">
+    <div class="wrap">
+      <span class="section-tag mono">Capabilities supported</span>
+      <h2 class="section-title display">JEDI-X and multinational standards, built to enable operations.</h2>
+      <p class="section-lead">Not a single-purpose tool — this is the full range of what JEDI-X and JEDI MNLOGCOP are built to carry, from first plan to last unit home.</p>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h4>Planning</h4>
+          <p class="benefit-teaser">Keeps every mission partner working off the same deployment plan instead of nine different spreadsheets.</p>
+          <div class="benefit-detail">
+            <p>Covers the full mission planning cycle, not just the logistics slice of it — run at exercise scale and at operational scale alike.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>Deployment &amp; Redeployment</h4>
+          <p class="benefit-teaser">Tracks a force from mobilization through return to home station — not just the deployed middle of the timeline.</p>
+          <div class="benefit-detail">
+            <p>Includes Force Closure Visualization: commanders see exactly when a unit will actually be ready, not just where it sits on a manifest.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>In-Transit Visibility</h4>
+          <p class="benefit-teaser">Real-time tracking of logistics movements as they happen, not after the fact.</p>
+          <div class="benefit-detail">
+            <p>Pulls from military and commercial transport systems alike, so a shipment doesn't go dark just because it crossed from one system into another.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>Route &amp; Infrastructure Deconfliction</h4>
+          <p class="benefit-teaser">Flags competing movement requests before they collide at the same port, road, or rail line.</p>
+          <div class="benefit-detail">
+            <p>Built for exactly the kind of distributed, contested environment where ports and fixed infrastructure are limited and vulnerable.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>Multinational Deployment Plan</h4>
+          <p class="benefit-teaser">One deployment plan, published in LOGFAS format, shared with every nation and NATO entity it affects.</p>
+          <div class="benefit-detail">
+            <p>This is how 21st TSC's JEDI Movement Center ran deployment visibility for a recent eastern-flank exercise series — one plan, distributed, not re-typed at every border.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>Sustainment</h4>
+          <p class="benefit-teaser">Visibility across every class of supply, Class I through X, plus Mission Essential Equipment and personnel.</p>
+          <div class="benefit-detail">
+            <p>Tracked side by side with a color-coded concern level, so a glance tells a planner exactly where the gaps are forming.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>Mission Tracking</h4>
+          <p class="benefit-teaser">Movements, assets, cargo, and inventory, plotted on one live map instead of five separate ones.</p>
+          <div class="benefit-detail">
+            <p>The same map filters by nation and overlays routes and positions, so planners see where things actually are.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>C2 Integration</h4>
+          <p class="benefit-teaser">Connects to command and control systems directly, including the Maven Smart System (MSS) — not just to logistics tools.</p>
+          <div class="benefit-detail">
+            <p>Through the JEDI API and a MIP Gateway, systems that were never designed to talk to each other now exchange data bi-directionally.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+        <div class="benefit-card">
+          <h4>Unit Readiness Reporting</h4>
+          <p class="benefit-teaser">Rolls unit-level readiness into the same picture commanders already use for logistics.</p>
+          <div class="benefit-detail">
+            <p>One screen puts location, supply status, and readiness together, so nobody's cross-referencing three reports to answer one question.</p>
+          </div>
+          <span class="benefit-toggle mono" aria-hidden="true">+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section callout-section" id="in-progress">
+    <div class="wrap">
+      <div class="callout-box">
+        <span class="section-tag mono">In progress now</span>
+        <h2 class="callout-title display">Closing the last manual gap</h2>
+        <p>Team JEDI is currently integrating US Army systems of record directly with LOGFAS through JEDI-X and a Foundry data layer — eliminating the "swivel chair" step where someone retypes the same data from one system into another. JEDI-X enforces best practices for that national-to-LOGFAS conversion to keep the data quality high on the way through. Once live, the Maven Smart System will be able to digest, store, and present multinational data natively, and VANTAGE gets the same automated feed alongside every partner's own system of record — without a single manual re-entry step.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section callout-section" id="paradigm">
+    <div class="wrap">
+      <div class="callout-box">
+        <span class="section-tag mono">Integration</span>
+        <h2 class="callout-title display">The ultimate paradigm</h2>
+        <p>JEDI is a complete package, not just an IT solution. It's agnostic of whatever logistics systems or technology a partner already has, and it accommodates every level of available technology so an operation doesn't stall out waiting for the least-equipped partner to catch up. It deploys rapidly with a minimal hardware footprint, and it runs across classified, unclassified, and commercial environments alike — so you can fight tonight, not in five years. One computer screen puts locations, supply parts, and readiness in view, so you always know where your stuff is. And because the picture stays live instead of static, it's what enables the shift from a Recognized Logistics Picture (RLP) — what happened — to a Recognized Logistics Forecast (RLF) — what's about to.</p>
+        <p class="callout-tag mono">Any data. Any way. Any time.</p>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  <section class="cta" id="deploy">
+    <div class="wrap">
+      <h2 class="display">See client that have solved their logistics problems.</h2>
+      <p>See the real commands and programs already using JEDI in the field.</p>
+      <a href="who.html" class="btn btn-primary">See who uses it →</a>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mono" id="copyright-year">© JEDI</span>
+
+    <span class="mono">Design by Myles</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
