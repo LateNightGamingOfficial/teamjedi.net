@@ -552,3 +552,120 @@
     .alert-cell:last-child { border-bottom:none; }
     .card-grid { grid-template-columns:1fr; }
   }
+  /* News popup */
+  .news-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(8,8,9,0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+  }
+  .news-popup-overlay.is-open { opacity: 1; visibility: visible; }
+  .news-popup {
+    position: relative;
+    background: var(--panel);
+    border: 2px solid var(--accent);
+    border-top: 4px solid var(--accent);
+    max-width: 460px;
+    width: 100%;
+    padding: 40px 36px;
+    text-align: left;
+    transform: translateY(14px);
+    transition: transform 0.25s ease;
+  }
+  .news-popup-overlay.is-open .news-popup { transform: translateY(0); }
+  .news-popup .section-tag { display:block; margin-bottom: 14px; }
+  .news-popup h2 { font-family:'sansation-bold'; text-transform:uppercase; font-size: 26px; line-height:1.15; margin: 0 0 14px; }
+  .news-popup p { font-family:'pluto-regular',sans-serif; color: var(--text-dim); font-size: 15px; line-height:1.55; margin: 0 0 26px; }
+  .news-popup-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  .news-popup-close:hover { color: var(--accent); }
+
+  @media (max-width:520px) {
+    .news-popup { padding: 32px 24px; }
+  }
+
+  .inuse-see-more { margin-top: 22px; text-align: right; }
+
+  /* Full-width Northern Strike banner: sits just under the sticky nav,
+     above the hero, visible from first load. */
+  .top-banner {
+    display: block;
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .top-banner:hover { background: var(--danger); }
+
+  @media (max-width:720px) {
+    .top-banner { font-size: 11px; padding: 9px 14px; }
+  }
+
+  .nav.scrolled {
+    min-height: 130px;
+  }
+  /* Keep the hamburger vertically aligned with the wordmark: both get
+     nudged up by the same fixed amount from the nav's true center, which
+     opens up room below the logo for the tagline without the two drifting
+     apart (a symmetric-padding container centers each independently, so
+     this shared offset is what keeps them lined up with each other). */
+  .nav.scrolled .nav-brand {
+    transform: translateY(-19px);
+  }
+  .nav.scrolled .nav-center-brand {
+    transform: translate(-50%, calc(-50% - 19px));
+  }
+  .nav.scrolled .nav-favicon-travel {
+    transform: translateY(calc(-50% + 3.42px - 19px));
+  }
+
+  /* "Fight tonight..." tagline: revealed only once the nav has collapsed
+     (same trigger/timing as the logo travel animation), sitting centered
+     just under the TeamJEDI wordmark, inside the nav's own dark band —
+     extra bottom padding above makes room for it there. Deliberately
+     understated — mono, dim — so it reads as part of the nav chrome. */
+  .nav-scroll-link {
+    position: absolute;
+    left: 50%;
+    top: 90px;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    color: var(--text-dim);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: opacity 0.4s ease;
+    z-index: 6;
+  }
+  .nav.scrolled .nav-scroll-link {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0.5s;
+  }
+  @media (max-width:720px) {
+    .nav-scroll-link { display: none; }
+  }

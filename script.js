@@ -39,6 +39,39 @@ document.addEventListener('DOMContentLoaded', () => {
   // Run once on load in case the page is already scrolled (e.g. anchor link reload)
   handleScroll();
 
+  // News popup: shown once per visit (sessionStorage-backed — reappears
+  // next time the visitor opens the site in a new session/tab), links to
+  // the Current Projects page. Only present on index.html.
+  const newsOverlay = document.getElementById('newsPopupOverlay');
+  if (newsOverlay) {
+    const NEWS_POPUP_KEY = 'jedi-news-popup-seen';
+    const closeBtn = document.getElementById('newsPopupClose');
+
+    const closeNewsPopup = () => {
+      newsOverlay.classList.remove('is-open');
+    };
+
+    let alreadySeen = false;
+    try {
+      alreadySeen = window.sessionStorage.getItem(NEWS_POPUP_KEY) === '1';
+    } catch (e) {
+      alreadySeen = false; // sessionStorage unavailable (e.g. private mode) — fail open
+    }
+
+    if (!alreadySeen) {
+      newsOverlay.classList.add('is-open');
+      try { window.sessionStorage.setItem(NEWS_POPUP_KEY, '1'); } catch (e) {}
+    }
+
+    closeBtn.addEventListener('click', closeNewsPopup);
+    newsOverlay.addEventListener('click', (e) => {
+      if (e.target === newsOverlay) closeNewsPopup();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNewsPopup();
+    });
+  }
+
   // Footer copyright year
   const yearEl = document.getElementById('copyright-year');
   if (yearEl) {
