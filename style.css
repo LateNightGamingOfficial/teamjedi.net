@@ -438,6 +438,23 @@
     .benefits-grid { grid-template-columns:1fr; }
   }
 
+  .photo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); margin:32px 0 48px; }
+  .photo-grid-item { position:relative; background:var(--panel); overflow:hidden; aspect-ratio:4/3; }
+  .photo-grid-item img { width:100%; height:100%; object-fit:cover; display:block; }
+  .photo-grid-item.wide { grid-column: span 1; }
+  .photo-grid-caption {
+    position:absolute; left:0; right:0; bottom:0;
+    padding:10px 14px;
+    background:linear-gradient(0deg, rgba(0,0,0,0.75), rgba(0,0,0,0));
+    color:#fff; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.03em;
+  }
+  @media (max-width:900px) {
+    .photo-grid { grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:600px) {
+    .photo-grid { grid-template-columns:1fr; }
+  }
+
   .callout-box { background:var(--panel); border-left:4px solid var(--accent); padding:44px 48px; max-width:900px; margin:0 auto; }
   .callout-tag { color:var(--accent); font-size:13px; letter-spacing:0.08em; text-transform:uppercase; margin:24px 0 0; }
   .callout-title { font-size:32px; margin:14px 0 22px; line-height:1.15; }
@@ -606,7 +623,10 @@
   /* Full-width Northern Strike banner: sits just under the sticky nav,
      above the hero, visible from first load. */
   .top-banner {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: var(--accent);
     color: #fff;
     text-align: center;
@@ -617,6 +637,7 @@
     text-decoration: none;
     transition: background 0.2s ease;
   }
+  .top-banner-logo { height: 26px; width: 26px; border-radius: 50%; flex-shrink: 0; }
   .top-banner:hover { background: var(--danger); }
 
   @media (max-width:720px) {
