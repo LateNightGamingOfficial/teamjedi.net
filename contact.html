@@ -87,8 +87,39 @@
         <div class="contact-primary">
           <span class="section-tag mono">Contact</span>
           <h2 class="section-title display">Request a deployment.</h2>
-          <p class="section-lead">The fastest way to reach Team JEDI is through the official Nexus LCM contact form — it routes straight to the people who scope and run these deployments.</p>
-          <a href="https://nexuslcm.com/contact/" target="_blank" rel="noreferrer" class="btn btn-primary">Open the contact form →</a>
+          <p class="section-lead">Tell us about your systems and what you need to connect. Your message goes straight to the people who scope and run these deployments.</p>
+
+          <!-- action = your serverless endpoint. "/api/contact" works when the site
+               is hosted on Vercel; if the site stays on GitHub Pages, use the full
+               URL, e.g. https://your-project.vercel.app/api/contact -->
+          <form class="contact-form" id="contactForm" action="/api/contact" method="POST" novalidate>
+            <div class="form-row">
+              <label class="form-field">
+                <span class="form-label mono">Name *</span>
+                <input type="text" name="name" autocomplete="name" maxlength="120" required>
+              </label>
+              <label class="form-field">
+                <span class="form-label mono">Email *</span>
+                <input type="email" name="email" autocomplete="email" maxlength="200" required>
+              </label>
+            </div>
+            <label class="form-field">
+              <span class="form-label mono">Organization / Unit</span>
+              <input type="text" name="organization" autocomplete="organization" maxlength="200">
+            </label>
+            <label class="form-field">
+              <span class="form-label mono">Message *</span>
+              <textarea name="message" rows="6" maxlength="5000" required></textarea>
+            </label>
+
+            <!-- Honeypot: hidden from people, bots fill it in and get silently dropped -->
+            <div class="form-hp" aria-hidden="true">
+              <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send message →</button>
+            <p class="form-status mono" role="status" aria-live="polite"></p>
+          </form>
         </div>
 
         <div class="contact-card">

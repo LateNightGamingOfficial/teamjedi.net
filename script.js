@@ -72,6 +72,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Contact form: validates in the browser, posts JSON to the serverless
+  // endpoint in the form's action attribute, and shows the result inline.
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    const statusEl = contactForm.querySelector('.form-status');
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const setStatus = (msg, type) => {
+      statusEl.textContent = msg;
+      statusEl.className = 'form-status mono' + (type ? ' is-' + type : '');
+    };
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      let firstInvalid = null;
+      contactForm.querySelectorAll('input[required], textarea[required], input[type="email"]').forEach((field) => {
+        const bad = !field.checkValidity() || (field.required && !field.value.trim());
+        field.classList.toggle('is-invalid', bad);
+        if (bad && !firstInvalid) firstInvalid = field;
+      });
+      if (firstInvalid) {
+        setStatus('Please fill in your name, a valid email and a message.', 'error');
+        firstInvalid.focus();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(contactForm).entries());
+      submitBtn.disabled = true;
+      setStatus('Sending…');
+
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(body.error || 'Request failed');
+        contactForm.reset();
+        setStatus('Thanks — your message has been sent. We will be in touch shortly.', 'success');
+      } catch (err) {
+        setStatus('Sorry, something went wrong sending your message. Please try again in a moment.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  }
+
   // Footer copyright year
   const yearEl = document.getElementById('copyright-year');
   if (yearEl) {
