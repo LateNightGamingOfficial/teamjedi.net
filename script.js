@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (err) {
         setStatus('Sorry, something went wrong sending your message. Please try again in a moment.', 'error');
       } finally {
-        submitBtn.disabled = false;
+        submitBtn.disabled = false;if (window.turnstile) window.turnstile.reset();
       }
     });
   }

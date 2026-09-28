@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Contact — JEDI</title>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <meta name="description" content="Get in touch with Team JEDI to talk about deploying JEDI-X and JEDI MNLOGCOP." />
 <link rel="icon" href="assets/media/logos/favicon_nexus.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -110,11 +111,11 @@
               <textarea name="message" rows="6" maxlength="5000" required></textarea>
             </label>
 
-            <!-- Honeypot: hidden from people, bots fill it in and get silently dropped -->
+            <!-- Honeypot -->
             <div class="form-hp" aria-hidden="true">
               <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
             </div>
-
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFG0WxldMZ8q81vA" data-theme="dark"></div>
             <button type="submit" class="btn btn-primary">Send message →</button>
             <p class="form-status mono" role="status" aria-live="polite"></p>
           </form>

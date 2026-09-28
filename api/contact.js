@@ -39,7 +39,20 @@ const oneLine = (v) => v.replace(/[\r\n]+/g, ' '); // blocks header injection
 const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const escapeHtml = (v) =>
   v.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
+async function verifyTurnstile(token, ip) {
+  if (!token || !process.env.TURNSTILE_SECRET_KEY) return false;
+  const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      secret: process.env.TURNSTILE_SECRET_KEY,
+      response: token,
+      remoteip: ip || '',
+    }),
+  });
+  const data = await r.json().catch(() => ({}));
+  return data.success === true;
+}
 module.exports = async (req, res) => {
   const origin = process.env.ALLOWED_ORIGIN;
   if (origin) {
@@ -57,7 +70,11 @@ module.exports = async (req, res) => {
 
   // Honeypot filled in = bot. Pretend success so it doesn't retry.
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
-
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  const token = clean(body['cf-turnstile-response'], 2048);
+  if (!(await verifyTurnstile(token, ip))) {
+    return res.status(403).json({ error: 'Verification failed. Please refresh the page and try again.' });
+  }
   const name = oneLine(clean(body.name, 120));
   const email = oneLine(clean(body.email, 200));
   const organization = oneLine(clean(body.organization, 200));
