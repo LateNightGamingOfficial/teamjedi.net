@@ -112,8 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!res.ok) throw new Error(body.error || 'Request failed');
         contactForm.reset();
         setStatus('Thanks — your message has been sent. We will be in touch shortly.', 'success');
+        if (window.jediTrack) window.jediTrack('generate_lead', { form: 'contact', organization_given: !!(data.organization || '').trim() });
       } catch (err) {
         setStatus('Sorry, something went wrong sending your message. Please try again in a moment.', 'error');
+        if (window.jediTrack) window.jediTrack('contact_form_error', { form: 'contact' });
       } finally {
         submitBtn.disabled = false;if (window.turnstile) window.turnstile.reset();
       }

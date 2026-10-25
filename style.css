@@ -639,7 +639,7 @@
 
   .inuse-see-more { margin-top: 22px; text-align: right; }
 
-  /* Full-width Northern Strike banner: sits just under the sticky nav,
+  /* Full-width news banner (currently AVT26): sits just under the sticky nav,
      above the hero, visible from first load. */
   .top-banner {
     display: flex;
@@ -709,3 +709,14 @@
   @media (max-width:720px) {
     .nav-scroll-link { display: none; }
   }
+
+/* Exercise nested under a parent engagement (e.g. AVT26 under USAREUR-AF) */
+.teaser-sub {
+  margin: 4px 0 18px;
+  padding: 12px 0 12px 16px;
+  border-left: 3px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.eyebrow-parent { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
