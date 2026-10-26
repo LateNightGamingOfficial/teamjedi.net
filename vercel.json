@@ -1,0 +1,306 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "analytics.teamjedi.net"
+        }
+      ],
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.teamjedi.net"
+        }
+      ],
+      "destination": "/accounts",
+      "permanent": false
+    },
+    {
+      "source": "/:page(index|about|what|how|who|contact|current-projects|ns26|avt26).html",
+      "has": [
+        {
+          "type": "host",
+          "value": "analytics.teamjedi.net"
+        }
+      ],
+      "destination": "https://teamjedi.net/:page.html",
+      "permanent": false
+    },
+    {
+      "source": "/:page(index|about|what|how|who|contact|current-projects|ns26|avt26).html",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.teamjedi.net"
+        }
+      ],
+      "destination": "https://teamjedi.net/:page.html",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "analytics.teamjedi.net"
+        }
+      ],
+      "destination": "https://admin.teamjedi.net/accounts",
+      "permanent": false
+    },
+    {
+      "source": "/portal/:file(index.html|login.html)",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal/",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal/login.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/login",
+      "permanent": false
+    },
+    {
+      "source": "/admin",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://admin.teamjedi.net/accounts",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://admin.teamjedi.net/accounts",
+      "permanent": false
+    },
+    {
+      "source": "/analytics",
+      "has": [
+        {
+          "type": "host",
+          "value": "teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/portal/login.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/login",
+      "permanent": false
+    },
+    {
+      "source": "/admin",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://admin.teamjedi.net/accounts",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://admin.teamjedi.net/accounts",
+      "permanent": false
+    },
+    {
+      "source": "/analytics",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.teamjedi.net"
+        }
+      ],
+      "destination": "https://analytics.teamjedi.net/dashboard",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/dashboard",
+      "has": [
+        {
+          "type": "host",
+          "value": "analytics.teamjedi.net"
+        }
+      ],
+      "destination": "/portal/index.html"
+    },
+    {
+      "source": "/login",
+      "has": [
+        {
+          "type": "host",
+          "value": "analytics.teamjedi.net"
+        }
+      ],
+      "destination": "/portal/login.html"
+    },
+    {
+      "source": "/accounts",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.teamjedi.net"
+        }
+      ],
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/login",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.teamjedi.net"
+        }
+      ],
+      "destination": "/admin/login.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(portal|admin)/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/(dashboard|accounts|login)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ]
+}
