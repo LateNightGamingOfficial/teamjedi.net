@@ -23,6 +23,10 @@
     }).then(function (r) {
       if (r.status === 401) { location.replace('/login'); throw { silent: true }; }
       return r.json().catch(function () { return {}; }).then(function (b) {
+        if (r.status === 403 && b.mustChange && window.JediPassword) {
+          if (!api._forced) { api._forced = true; window.JediPassword.open({ forced: true, done: function () { location.reload(); } }); }
+          throw { silent: true };
+        }
         if (!r.ok) throw new Error(b.error || 'Something went wrong.');
         return b;
       });
@@ -91,7 +95,8 @@
         '<td data-label="Can see">' + sections + '</td>' +
         '<td data-label="Role">' + (u.admin ? '<span class="chip admin">Admin</span>' : '<span class="chip">Client</span>') +
           (u.source === 'env' ? '<span class="chip env" title="Set in Vercel PORTAL_USERS">Vercel</span>' : '') + '</td>' +
-        '<td data-label="Status">' + (u.disabled ? '<span class="chip off">Off</span>' : '<span class="chip on">Active</span>') + '</td>' +
+        '<td data-label="Status">' + (u.disabled ? '<span class="chip off">Off</span>' : '<span class="chip on">Active</span>') +
+          (u.mustChange && !u.disabled ? '<span class="chip env" title="Signed in with a temporary password; will choose their own next time">New password due</span>' : '') + '</td>' +
         '<td class="muted" data-label="Last sign-in">' + esc(when(u.lastLogin)) + '</td>' +
         '<td><button type="button" class="edit-link">Edit</button></td></tr>';
     }).join('');
@@ -168,7 +173,7 @@
     post(body).then(function (r) {
       dlg.close();
       return loadUsers().then(function () {
-        if (r.password) showPassword(r.user, r.password, 'Account created for ' + r.user.name + '.');
+        if (r.password) showPassword(r.user, r.password, 'Account created for ' + r.user.name + '. Temporary password:');
         else toast(u ? 'Changes saved' : 'Account created');
       });
     }).catch(function (err) { if (!err.silent) setMsg(err.message); })
@@ -183,7 +188,9 @@
     b.addEventListener('click', function () {
       var u = state.editing; if (!u) return;
       var act = b.dataset.act, text;
-      if (act === 'reset-password') text = 'Reset ' + u.name + '’s password? They’ll be signed out and need the new one.';
+      if (act === 'reset-password') text = (state.me && u.email === state.me.email)
+        ? 'Reset your own password? You’ll get a new one and sign in again with it. (To pick your own, use the Password button at the top instead.)'
+        : 'Reset ' + u.name + '’s password? They’ll be signed out, get a temporary password from you, and choose their own when they next sign in.';
       if (act === 'signout') text = 'Sign ' + u.name + ' out on every device?';
       if (act === 'toggle') text = u.disabled ? 'Switch ' + u.name + '’s account back on?' : 'Switch off ' + u.name + '’s account? They’ll be signed out and can’t sign in until it’s switched back on.';
       if (act === 'delete') text = 'Delete ' + u.name + '’s account for good? This can’t be undone.';
@@ -202,7 +209,7 @@
         return;
       }
       return loadUsers().then(function () {
-        if (r.password) showPassword(u, r.password, 'New password for ' + u.name + '.');
+        if (r.password) showPassword(u, r.password, 'Temporary password for ' + u.name + '.');
         else toast({ signout: 'Signed out everywhere', toggle: u.disabled ? 'Account switched on' : 'Account switched off', delete: 'Account deleted' }[act] || 'Done');
       });
     }).catch(function (err) { if (!err.silent) setMsg(err.message); })

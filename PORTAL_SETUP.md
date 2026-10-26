@@ -69,9 +69,14 @@ from the day they're created.
 
 - **What they can see**: Visitors & top pages / What people read / Where visitors come from.
 - **Admin**: can use admin.teamjedi.net and sees the Clarity link. Give to your own team only.
-- **Passwords**: generated (shown once) or set by you; 12+ characters; stored only as a
-  scrypt hash. Resetting a password, switching an account off, or "Sign out everywhere"
-  ends that person's sessions immediately.
+- **Passwords**: everyone chooses their own. When an admin creates an account or resets a
+  password, the password they hand over is temporary: at the next sign-in the person must
+  choose their own before they can see anything (the Accounts list shows "New password
+  due" until they do). Anyone can change their password any time with the **Password**
+  button at the top of either site; that keeps them signed in on that device and signs
+  them out everywhere else. 12+ characters; stored only as a scrypt hash.
+- Resetting a password, switching an account off, or "Sign out everywhere" ends that
+  person's sessions immediately.
 - **Sessions**: 12 hours on analytics, 4 hours on admin. A sign-in on one site doesn't
   sign you in to the other.
 - **Protection**: 8 failed sign-ins from one address → 15-minute pause. Admins can't

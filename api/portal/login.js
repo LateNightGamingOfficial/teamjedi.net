@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
     await auth.recordLogin(user.email);
     if (site === 'admin') await auth.audit(user.email, 'admin sign-in', user.email);
     res.setHeader('Set-Cookie', auth.sessionCookie(req, token, auth.SESSION_HOURS[site] * 3600));
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ ok: true, mustChange: !!user.mustChange });
   } catch (err) {
     const setup = /PORTAL_SECRET/.test(err.message);
     return res.status(500).json({ error: setup ? 'The portal isn’t fully set up yet (missing PORTAL_SECRET).' : 'Sign-in is unavailable right now. Please try again shortly.' });

@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
   let me;
   try { me = await auth.currentUser(req); } catch { me = null; }
   if (!me) return fail(res, 401, 'Not signed in');
+  if (me.mustChange) return res.status(403).json({ error: 'Choose a new password first.', mustChange: true });
 
   try {
     if (req.method === 'GET') {
@@ -45,10 +46,12 @@ module.exports = async (req, res) => {
       let password = String(b.password || '');
       const generated = !password;
       if (generated) password = auth.generatePassword();
-      if (password.length < 12) return fail(res, 400, 'Passwords need at least 12 characters.');
+      const problem = auth.passwordProblem(password, email);
+      if (problem) return fail(res, 400, problem);
       const user = await auth.saveUser({
         email, name, org: clean(b.org, 120), hash: auth.hashPassword(password), sections: b.sections,
-        admin: b.admin === true, disabled: false, ver: 0, createdAt: new Date().toISOString(), createdBy: me.email,
+        admin: b.admin === true, disabled: false, ver: 0, mustChange: true, // they choose their own at first sign-in
+        createdAt: new Date().toISOString(), createdBy: me.email,
       });
       await auth.audit(me.email, 'created account', email, (user.admin ? 'Admin; ' : '') + 'can see ' + labels(user.sections));
       return res.status(200).json({ user: auth.publicUser(user), password: generated ? password : undefined });
@@ -91,9 +94,11 @@ module.exports = async (req, res) => {
       let password = String(b.password || '');
       const generated = !password;
       if (generated) password = auth.generatePassword();
-      if (password.length < 12) return fail(res, 400, 'Passwords need at least 12 characters.');
+      const problem = auth.passwordProblem(password, email);
+      if (problem) return fail(res, 400, problem);
       const saved = await auth.saveUser(Object.assign({}, existing, {
         hash: auth.hashPassword(password), ver: (Number(existing.ver) || 0) + 1,
+        mustChange: !isMe, // someone else set it, so they pick their own at next sign-in
         createdAt: existing.createdAt || new Date().toISOString(), createdBy: existing.createdBy || 'PORTAL_USERS',
       }));
       await auth.audit(me.email, 'reset password', email);

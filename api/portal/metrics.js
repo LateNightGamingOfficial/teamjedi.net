@@ -115,6 +115,7 @@ module.exports = async (req, res) => {
   let user = null;
   try { user = await auth.currentUser(req); } catch { user = null; }
   if (!user) return res.status(401).json({ error: 'Not signed in' });
+  if (user.mustChange) return res.status(403).json({ error: 'Choose a new password first.', mustChange: true });
 
   const days = [7, 28, 90].includes(Number(req.query && req.query.days)) ? Number(req.query.days) : 28;
   const live = ga.isConfigured();

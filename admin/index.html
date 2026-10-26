@@ -22,6 +22,7 @@
     </nav>
     <a class="btn-ghost" id="toAnalytics" href="https://analytics.teamjedi.net/dashboard">Analytics →</a>
     <div class="p-user mono" id="who"></div>
+    <button type="button" class="btn-ghost" id="changePw">Password</button>
     <button type="button" class="btn-ghost" id="signOut">Sign out</button>
   </header>
 
@@ -104,7 +105,7 @@
         <label class="check toggle"><input type="checkbox" name="admin" id="fAdmin" /> <span><b>Admin</b> can use this admin site and sees the Clarity heatmaps link. Give this only to your own team.</span></label>
 
         <fieldset class="field" id="pwField">
-          <legend>Password</legend>
+          <legend>Temporary password</legend>
           <label class="check"><input type="radio" name="pwMode" value="generate" checked /> <span>Generate a strong password for me</span></label>
           <label class="check"><input type="radio" name="pwMode" value="set" /> <span>I’ll set one</span></label>
           <input id="fPassword" name="password" type="text" autocomplete="new-password" placeholder="12+ characters" minlength="12" hidden />
@@ -140,11 +141,12 @@
     <div class="dlg-body">
       <p id="pwIntro"></p>
       <div class="pw-box"><code id="pwValue"></code><button type="button" class="btn-ghost" id="copyPw">Copy</button></div>
-      <p class="sub">This is the only time it’s shown. Send it to them privately (not in the same message as their email), and they sign in at <b>analytics.teamjedi.net</b>.</p>
+      <p class="sub">This is the only time it’s shown. Send it to them privately (not in the same message as their email). When they sign in at <b>analytics.teamjedi.net</b> they’ll be asked to choose their own password.</p>
     </div>
     <footer class="dlg-foot"><button type="button" class="btn btn-inline" id="pwDone">Done</button></footer>
   </dialog>
 
+<script src="/portal/account.js"></script>
 <script src="/admin/admin.js"></script>
 </body>
 </html>

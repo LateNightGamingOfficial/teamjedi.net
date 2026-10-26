@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
   let me;
   try { me = await auth.currentUser(req); } catch { me = null; }
   if (!me) return res.status(401).json({ error: 'Not signed in' });
+  if (me.mustChange) return res.status(403).json({ error: 'Choose a new password first.', mustChange: true });
 
   const secretOk = String(process.env.PORTAL_SECRET || '').length >= 32;
   const out = {

@@ -64,6 +64,16 @@ function generatePassword() {
   return s;
 }
 
+// Returns an error message, or '' if the password is acceptable.
+function passwordProblem(pw, email) {
+  pw = String(pw || '');
+  if (pw.length < 12) return 'Passwords need at least 12 characters.';
+  if (pw.length > 200) return 'That password is too long (200 characters max).';
+  if (pw.trim().toLowerCase() === normEmail(email)) return 'Don\u2019t use your email address as your password.';
+  if (/^(.)\1+$/.test(pw)) return 'Pick something less predictable than one repeated character.';
+  return '';
+}
+
 // ---------- accounts ----------
 function normEmail(e) { return String(e || '').trim().toLowerCase(); }
 function cleanSections(s) {
@@ -113,7 +123,8 @@ async function saveUser(u) {
   const rec = {
     email: normEmail(u.email), name: u.name, org: u.org || '', hash: u.hash,
     sections: cleanSections(u.sections), admin: u.admin === true, disabled: u.disabled === true,
-    ver: Number(u.ver) || 0, createdAt: u.createdAt, createdBy: u.createdBy, updatedAt: new Date().toISOString(),
+    ver: Number(u.ver) || 0, mustChange: u.mustChange === true,
+    createdAt: u.createdAt, createdBy: u.createdBy, updatedAt: new Date().toISOString(),
   };
   await store.cmd('HSET', USERS_KEY, rec.email, JSON.stringify(rec));
   return rec;
@@ -123,7 +134,7 @@ async function deleteUser(email) { await store.cmd('HDEL', USERS_KEY, normEmail(
 function publicUser(u) {
   return {
     email: u.email, name: u.name, org: u.org || '', sections: u.sections, admin: !!u.admin,
-    disabled: !!u.disabled, source: u.source, lastLogin: u.lastLogin || null,
+    disabled: !!u.disabled, mustChange: !!u.mustChange, source: u.source, lastLogin: u.lastLogin || null,
     createdAt: u.createdAt || null, createdBy: u.createdBy || null, updatedAt: u.updatedAt || null,
   };
 }
@@ -216,6 +227,6 @@ function readBody(req) {
 
 module.exports = {
   ALL_SECTIONS, SESSION_HOURS, siteFor, sameOrigin, hashPassword, checkPassword, DUMMY_HASH, generatePassword,
-  normEmail, cleanSections, envUsers, getUser, listUsers, saveUser, deleteUser, publicUser, recordLogin, audit, auditLog,
+  normEmail, cleanSections, passwordProblem, envUsers, getUser, listUsers, saveUser, deleteUser, publicUser, recordLogin, audit, auditLog,
   isLockedOut, noteFailure, clearFailures, clientIp, createSession, currentUser, sessionCookie, readBody,
 };

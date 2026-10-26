@@ -319,7 +319,13 @@
     fetch('/api/portal/metrics?days=' + days, { credentials: 'same-origin' })
       .then(function (r) {
         if (r.status === 401) { location.replace('/login'); throw null; }
-        return r.json().then(function (b) { if (!r.ok) throw new Error(b.error || 'Something went wrong.'); return b; });
+        return r.json().then(function (b) {
+          if (r.status === 403 && b.mustChange && window.JediPassword) {
+            window.JediPassword.open({ forced: true, done: load }); throw null;
+          }
+          if (!r.ok) throw new Error(b.error || 'Something went wrong.');
+          return b;
+        });
       })
       .then(render)
       .catch(function (err) {
